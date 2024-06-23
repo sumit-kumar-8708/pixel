@@ -17,8 +17,9 @@ class Pixel_price extends CI_Controller {
         // echo 'hh'; die;
         $price_list=$this->check_price_and_update();
         $data['price_list']=$price_list;
+		$this->load->view('pixelPriceShow',$data);
 		// $this->load->view('price_list',$data);
-		$this->load->view('price_list_old',$data);
+		// $this->load->view('price_list_old',$data);
 	}
 
     // function ajax_get_price(){
@@ -34,7 +35,7 @@ class Pixel_price extends CI_Controller {
     }
 
     function check_price_and_update(){
-        $price_list=$this->pixel_price_model->get_price_list(6);
+        $price_list=$this->pixel_price_model->get_price_list(5);
         // echo '<pre>';
         // print_r($price_list); die;
         if(count($price_list)>0){
@@ -55,7 +56,7 @@ class Pixel_price extends CI_Controller {
                     "added_on"=>date("Y-m-d H:i:s"),
                 ];
                 $this->pixel_price_model->add_price($post_data);
-                $price_list=$this->pixel_price_model->get_price_list(6);
+                $price_list=$this->pixel_price_model->get_price_list(5);
                 return $price_list;
             }else{
                 return $price_list;
@@ -78,7 +79,7 @@ class Pixel_price extends CI_Controller {
             // echo '<pre>';
             // print_r($post_data); die;
             $this->pixel_price_model->add_price($post_data);           
-            $price_list=$this->pixel_price_model->get_price_list(6);
+            $price_list=$this->pixel_price_model->get_price_list(5);
             return $price_list;
         }
     }

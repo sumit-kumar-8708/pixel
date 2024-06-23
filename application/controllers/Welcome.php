@@ -20,7 +20,9 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		// $this->load->view('welcome_message');
+		$this->load->view('pixelPriceShow');
+
 	}
 
 	public function test()
@@ -63,8 +65,8 @@ class Welcome extends CI_Controller {
 	function live_price_show(){
 		// echo 'check live_price'; die;
 		$this->load->library('session');
-		// $this->load->view('price_list');
-		$this->load->view('price_list_old');
+		$this->load->view('price_list');
+		// $this->load->view('price_list_old');
 
 	}
 

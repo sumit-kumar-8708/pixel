@@ -1,22 +1,22 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <title>Hello, world!</title>
-  </head>
-  <style>
-    .latest_row td {
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<style>
+    .latest_row td{
         font-weight: bold;
     }
 </style>
-  <body>
-  <div class="container">
+<body>
+    <div class="container">
         <div class="row">
             <div class="col-md-4 offset-md-4 mt-4">
                 <table class="table table-bordered table-striped">
@@ -49,36 +49,17 @@
             </div>
         </div>
     </div>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-  $("#hide").click(function(){
-    $("p").hide();
-  });
-  $("#show").click(function(){
-    $("p").show();
-  });
-});
-</script>
-
-<script>
+    <script>
         $(document).ready(function(){           
             function get_ajax_pixel_price(){
-                $.ajax({                 
-                    type: "POST",
-                    url: '<?= base_url().'pixel_price/renderData' ?>',
-                    data:  new FormData(this),
-                    processData: false,
-                    contentType: false,
-                    success: function(data) {
-                   
+                $.ajax({                   
+                    url:"<?php echo site_url('pixel_price/renderData')?>",
+                    method:'post',
+                    dataType:'json',
+                    // beforeSend:function(){
+                    //     $('#price').html('Data loading..');
+                    // },
+                    success:function(data){
                         console.log(data);
                         if(data){
                             var html="";
@@ -103,14 +84,13 @@ $(document).ready(function(){
                             });
                             $('#tbody').html(html);
                         }
-                        location.reload();
                     }
                 });
             }
-            get_ajax_pixel_price();
-            // setInterval(get_ajax_pixel_price, 60000);
-            setInterval(get_ajax_pixel_price, 1000);
+            // get_ajax_pixel_price();
+            setInterval(get_ajax_pixel_price, 60000);
+            // setInterval(get_ajax_pixel_price, 1000);
         });
     </script>
-  </body>
+</body>
 </html>

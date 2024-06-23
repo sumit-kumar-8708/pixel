@@ -296,6 +296,7 @@ $config['error_views_path'] = '';
 */
 $config['cache_path'] = '';
 
+
 /*
 |--------------------------------------------------------------------------
 | Cache Include Query String
@@ -385,6 +386,7 @@ $config['sess_save_path'] = NULL;
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
+ 
 
 /*
 |--------------------------------------------------------------------------
