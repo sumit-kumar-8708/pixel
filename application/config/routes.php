@@ -53,7 +53,3 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-
-
-// $route['pixel_price']='pixel_price/index';
-$route['ajax-price']='pixel_price/renderData';

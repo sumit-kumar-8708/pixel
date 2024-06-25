@@ -51,7 +51,7 @@
                         if (data) {
                             var html = "";
                             data.forEach((price, index) => {
-                                const rowClass = index === 0 ? 'latestPriceUpdate' : ''; // Add class only for the first row (index 0)
+                                const rowClass = index === 0 ? 'latestPriceUpdate' : '';
                                 html += `
                                     <tr class="${rowClass}">
                                         <td>${index + 1}</td>
@@ -63,19 +63,17 @@
                             });
                             $('#tbody').html(html);
                         } else {
-                            console.error('Failed to fetch pixel price data');
-                            // Handle the error case
+                            console.error('Failed to fetch pixel price data');                           
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        console.error('AJAX error:', textStatus, errorThrown);
-                        // Handle AJAX errors
+                        console.error('AJAX error:', textStatus, errorThrown);                       
                     }
                 });
             }
 
             get_ajax_pixel_price();
-            setInterval(get_ajax_pixel_price, 60000); // Update every minute
+            setInterval(get_ajax_pixel_price, 60000); 
         });
     </script>
 </body>
