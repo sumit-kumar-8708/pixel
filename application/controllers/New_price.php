@@ -21,50 +21,7 @@ class New_price extends CI_Controller {
 	function ajax_apihit_every_one_min(){      
         $price_list=$this->insert_and_update_data_show();
         echo json_encode($price_list);
-    }
-
-    // function insert_and_update_data_show(){
-        
-    //     $price_list=$this->new_model->get_price_list(6);
-      
-    //     if(count($price_list)>0){
-    //         $latest_price_details=$price_list[0];        
-    //         $last_update=strtotime($latest_price_details->added_on);
-         
-    //         if(!$last_update || (time()-$last_update)>=60){
-    //             //after 60 sec
-    //             $new_price_details=$this->get_pixel_api_data();
-    //             $post_data = [
-    //                 "symbol" => $new_price_details['data']['symbol'],
-    //                 "bidPrice" => $new_price_details['data']['bidPrice'],
-    //                 "bidQty" => $new_price_details['data']['bidQty'],
-    //                 "askPrice" => $new_price_details['data']['askPrice'],
-    //                 "askQty" => $new_price_details['data']['askQty'],
-    //                 "time" => $new_price_details['data']['time'],
-    //                 "added_on" => date("Y-m-d H:i:s"),
-    //             ];
-    //             $this->new_model->add_price($post_data);
-    //             $price_list=$this->new_model->get_price_list(6);
-    //             return $price_list;
-    //         }else{
-    //             return $price_list;
-    //         }
-    //     }else{           
-    //         $new_price_details=$this->get_pixel_api_data();         
-    //         $post_data = [
-    //             "symbol" => $new_price_details['data']['symbol'],
-    //             "bidPrice" => $new_price_details['data']['bidPrice'],
-    //             "bidQty" => $new_price_details['data']['bidQty'],
-    //             "askPrice" => $new_price_details['data']['askPrice'],
-    //             "askQty" => $new_price_details['data']['askQty'],
-    //             "time" => $new_price_details['data']['time'],
-    //             "added_on" => date("Y-m-d H:i:s"),
-    //         ];
-    //         $this->new_model->add_price($post_data);
-    //         $price_list=$this->new_model->get_price_list(6);
-    //         return $price_list;
-    //     }
-    // } 
+    }  
 
     function insert_and_update_data_show(){
         
