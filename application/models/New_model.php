@@ -6,7 +6,20 @@ class New_model extends CI_Model
     {
         parent::__construct();
         $this->load->database();
-    }  
+        
+    }
+
+    function get_price_details($id=null){
+        if($id){
+            $this->db->select('*');
+            $this->db->from('price_details');
+            $this->db->where('id',$id);
+            $result=$this->db->get()->row();
+            return $result;
+        }else{
+            return false;
+        }
+    }
 
     function get_price_list($limit=null){
         $this->db->select('*,');
@@ -28,19 +41,9 @@ class New_model extends CI_Model
         }
     }
 
-    function get_last_api_call() {
-        $this->db->select('last_call');
-        $this->db->from('api_call_log');
-        $this->db->order_by('id', 'desc');
-        $this->db->limit(1);
-        $result = $this->db->get()->row();
-        return $result;
-    }
-
-    function update_last_api_call() {
-        $data = [
-            'last_call' => date("Y-m-d H:i:s")
-        ];
-        $this->db->insert('api_call_log', $data);
-    }
+    
 }
+
+
+
+?>

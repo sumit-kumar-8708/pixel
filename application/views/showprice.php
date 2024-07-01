@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <title>Live-price</title>
+</head>
+<style>
+    .latestPriceUpdate td {
+        font-weight: bold;
+        color: red;
+    }
+  
+</style>
+<body>
+
+<div class="container">
+    <h1 class="text-center text-success">Live Pixel Price Status</h1>
+
+    <div class="">
+        <div class="" style="width: 600px; text-align: center;">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Srno.</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                </tr>
+                </thead>
+                <tbody id="tbody">
+                <?php foreach ($price_list as $key => $price){ ?>
+                    <?php if($key==0){ ?>
+                        <tr class="latestPriceUpdate">
+                            <td><?php echo $key+1 ?></td>
+                            <td><?php echo $price->bidPrice ?></td>
+                            <td><?php echo date('d-M-Y', strtotime($price->added_on)) ?></td>
+                            <td><?php echo date('h:i:s A', strtotime($price->added_on)) ?></td>
+                        </tr>
+                    <?php } else { ?>
+                        <tr>
+                            <td><?php echo $key+1 ?></td>
+                            <td><?php echo $price->bidPrice ?></td>
+                            <td><?php echo date('d-M-Y', strtotime($price->added_on)) ?></td>
+                            <td><?php echo date('h:i:s A', strtotime($price->added_on)) ?></td>
+                        </tr>
+                    <?php } ?>
+                <?php } ?>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            function get_ajax_pixel_price(){
+                $.ajax({
+                    url:"<?php echo base_url()?>new_price/ajax_apihit_every_one_min",
+                    method:'post',
+                    dataType:'json',                   
+                    success:function(data){
+                        if(data){
+                            var html="";
+                            data.forEach((price,i) => {
+                                if(i==0){
+                                    html+=`
+                                    <tr class="latestPriceUpdate">
+                                        <td>${i+1}</td>                         
+                                        <td>${price.bidPrice}</td> 
+                                        <td>${price.added_on ? new Date(price.added_on).toLocaleDateString() : '-'}</td>
+                                        <td>${price.added_on ? new Date(price.added_on).toLocaleTimeString() : '-'}</td>                       
+                                    </tr>
+                                    `
+                                }else{
+                                    html+=`
+                                    <tr>
+                                        <td>${i+1}</td>                         
+                                        <td>${price.bidPrice}</td>                         
+                                        <td>${price.added_on ? new Date(price.added_on).toLocaleDateString() : '-'}</td>
+                                        <td>${price.added_on ? new Date(price.added_on).toLocaleTimeString() : '-'}</td>                    
+                                    </tr>
+                                    `
+                                }
+                            });
+                            $('#tbody').html(html);
+                        }
+                    }
+                });
+            }
+            // get_ajax_pixel_price();
+            setInterval(get_ajax_pixel_price, 60000);
+        });
+    </script>
+</body>
+</html>

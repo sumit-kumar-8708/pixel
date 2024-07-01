@@ -22,17 +22,23 @@ class Pixel_price extends CI_Controller {
 
     function insert_and_update_data_show() {
         $price_list = $this->pixel_price_model->get_price_list(3);       
-        $needs_update = false;
+        $needs_update = 0;
     
         if (count($price_list) > 0) {
             $latest_price_details = $price_list[0];
             $last_update = strtotime($latest_price_details->added_on);           
             if (!$last_update || (time() - $last_update) >= 60) {              
-                $needs_update = true;
+                $needs_update = 1;
+            }else{
+                //time is less to 1 min
+                echo 'time is less to 1 min'; die;
+                $price_list = $this->pixel_price_model->get_price_list(3); 
             }
         }
     
         if ($needs_update) {
+            // echo 'true'; die;
+
             $new_price_details = $this->get_pixel_api_data();
             if ($new_price_details) {
                 $post_data = [
@@ -51,6 +57,7 @@ class Pixel_price extends CI_Controller {
                 echo 'Failed to get data from API';
             }
         }else{
+            // echo 'false'; die;
             $new_price_details = $this->get_pixel_api_data();
 
             if ($new_price_details) {

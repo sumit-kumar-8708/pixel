@@ -72,7 +72,7 @@
                 });
             }
 
-            get_ajax_pixel_price();
+            // get_ajax_pixel_price();
             setInterval(get_ajax_pixel_price, 60000); 
         });
     </script>
