@@ -1,11 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>403 Forbidden</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Hierarchy with Columns</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+    <div class="container-fluid mt-4">
+        <div class="row" id="columnsContainer">
+            <!-- Initial column will be added here -->
+        </div>
+    </div>
 
-<p>Directory access is forbidden.</p>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <script>
+        var jsonData = [
+            {id: '21', title: 'Profile', parent_id: '0', type: '1', is_default: '1'},
+            {id: '22', title: 'Edit Profile', parent_id: '21', type: '1', is_default: '1'},
+            {id: '23', title: 'Security', parent_id: '21', type: '1', is_default: '0'},
+            {id: '24', title: 'KYC', parent_id: '21', type: '1', is_default: '0'},
+            {id: '25', title: 'Update Profile Picture', parent_id: '22', type: '2', is_default: '0'},
+            {id: '26', title: 'Update Full Name', parent_id: '22', type: '2', is_default: '0'},
+            {id: '27', title: 'Update Address', parent_id: '22', type: '2', is_default: '0'},
+            {id: '28', title: 'Activity Timeline', parent_id: '21', type: '1', is_default: '0'},
+
+            {id: '1', title: 'Registration', parent_id: '0', type: '1', is_default: '1'},
+            {id: '2', title: 'username', parent_id: '1', type: '1', is_default: '1'},
+            {id: '3', title: 'Phone', parent_id: '1', type: '1', is_default: '0'},
+            {id: '4', title: 'email', parent_id: '1', type: '1', is_default: '0'},
+            {id: '5', title: 'login with email', parent_id: '4', type: '2', is_default: '0'},
+            {id: '6', title: 'Auto craete', parent_id: '2', type: '2', is_default: '0'},
+            {id: '7', title: 'manual create', parent_id: '2', type: '2', is_default: '0'},
+            // {id: '8', title: 'Activity Timeline', parent_id: '21', type: '1', is_default: '0'}
+        ];
+
+        // Function to create hierarchy columns dynamically
+        function createColumn(parentId) {
+            // Clear columns to the right of the current parent
+            $('#columnsContainer').find('.col').filter(function() {
+                return $(this).data('parent-id') > parentId;
+            }).remove();
+
+            // Get the children of the clicked parent
+            var children = jsonData.filter(item => item.parent_id === parentId);
+
+            if (children.length > 0) {
+                // Create a new column with child items
+                var column = $('<div class="col-md-4"></div>').data('parent-id', parentId);
+                var card = $('<div class="card"></div>');
+                var cardBody = $('<div class="card-body"></div>');
+
+                children.forEach(function(child) {
+                    var button = $('<button class="btn btn-primary mb-2"></button>').text(child.title);
+                    button.on('click', function() {
+                        createColumn(child.id); // Recursive call to add next level
+                    });
+                    cardBody.append(button);
+                });
+
+                card.append(cardBody);
+                column.append(card);
+                $('#columnsContainer').append(column);
+            }
+        }
+
+        // Initial call to create the root column
+        createColumn('0');
+    </script>
 </body>
 </html>
